@@ -5,6 +5,7 @@ import pandas as pd
 from argparse import ArgumentParser
 import yaml
 from explore import Explorer
+from collections import OrderedDict
 
 
 def main():
@@ -26,7 +27,7 @@ class Extractor(object):
         self.config = yaml.load(open(config))
 
     def run(self):
-        datadict = {}
+        datadict = OrderedDict()
         firstday = self.config['firstday']
         lastday = self.config['lastday']
         for filename, features in self.config['files'].iteritems():
