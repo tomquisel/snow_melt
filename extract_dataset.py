@@ -25,29 +25,40 @@ class Extractor(object):
 
     def __init__(self, config):
         self.config = yaml.load(open(config))
+        self.datadict = OrderedDict()
 
     def run(self):
-        datadict = OrderedDict()
+        for filename, features in self.config['files'].iteritems():
+            for path, details in features['datasets'].iteritems():
+                explorer = Explorer(filename, path)
+                self.extract_feature(explorer, details)
+
+        df = pd.DataFrame(self.datadict)
+        df.to_csv(self.config['outfile'], index=False)
+
+    def extract_feature(self, explorer, details):
+        name = details['name']
         firstday = self.config['firstday']
         lastday = self.config['lastday']
-        for filename, features in self.config['files'].iteritems():
-            dayoffset = features['dayoffset']
-            for path, name in features['datasets'].iteritems():
-                explorer = Explorer(filename, path)
+        dayoffset = self.config['files'][explorer.filename]['dayoffset']
+        start = firstday + dayoffset
+        end = lastday + dayoffset
 
-                if self.config['mode'] == 'time_series':
-                    # Extract the data set for each day of the time series
-                    # as a separate feature.
-                    for day in range(firstday, lastday + 1):
-                        data = explorer.extract_slice(day + dayoffset)
-                        datadict["{0}.{1}".format(name, day)] = data
-                else:
-                    data = explorer.extract_regression_data(firstday + dayoffset,
-                                                            lastday + dayoffset)
-                    datadict[name] = data
+        if self.config['mode'] == 'time_series':
+            if details['aggregation'] == 'all':
+                # Extract the data set for each day of the time series
+                # as a separate feature.
+                for day in range(firstday, lastday + 1):
+                    data = explorer.extract_slice(day + dayoffset)
+                    self.datadict["{0}.{1}".format(name, day)] = data
+            elif details['aggregation'] == 'mean':
+                data = explorer.extract_aggregate_data(start, end, np.mean)
+                self.datadict[name + '_mean'] = data
+        else:
+            data = explorer.extract_regression_data(start, end)
+            self.datadict[name] = data
 
-        df = pd.DataFrame(datadict)
-        df.to_csv(self.config['outfile'], index=False)
+
 
 if __name__ == '__main__':
     main()

@@ -6,13 +6,21 @@ files:
     smooth_afghan_AMSRE_h23v05_WY2009.h5:
         dayoffset: 92
         datasets:
-            Grid/MODIS_GRID_10km/amsr_swe_smoothed: amsr_swe_smoothed
+            Grid/MODIS_GRID_10km/amsr_swe_smoothed:
+                name: amsr_swe_smoothed
+                aggregation: all
     h23v05_WY2009_10km.h5:
         dayoffset: 92
         datasets:
-            Grid/MODIS_GRID_10km/sca_mean: sca_mean
-            Grid/MODIS_GRID_10km/sca_stddev: sca_stddev
+            Grid/MODIS_GRID_10km/sca_mean:
+                name: sca_mean
+                aggregation: all
+            Grid/MODIS_GRID_10km/sca_stddev:
+                name: sca_stddev
+                aggregation: all
     ReconSWE_h23v05_2009_10km.h5:
         dayoffset: 0
         datasets:
-            Grid/MODIS_GRID_10km/swe_mean: recon_swe_mean
+            Grid/MODIS_GRID_10km/swe_mean:
+                name: recon_swe_mean
+                aggregation: mean

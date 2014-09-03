@@ -15,14 +15,15 @@ def parse_args():
     description = 'train microwave swe -> reconstructed swe model'
     parser = ArgumentParser(description=description)
     parser.add_argument('infile', help='location of csv file')
+    parser.add_argument('target', help='name of the target variable')
     return parser.parse_args()
 
 class Modeler(object):
 
     def __init__(self, args):
         data = pd.read_csv(args.infile)
+        target = args.target
         data.dropna(inplace=True)
-        target = 'recon_swe_mean'
         self.X = data[[col for col in data.columns if col != target]]
         self.y = data[target]
 

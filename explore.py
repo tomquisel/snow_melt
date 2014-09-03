@@ -42,6 +42,14 @@ class Explorer(object):
         data = self.data[day_of_year, ...]
         return data.ravel()
 
+    def extract_aggregate_data(self, firstday, lastday, aggfn):
+        """ Aggregate the data across all days for each pixel.
+            aggfn can be any aggregation function, like np.mean
+        """
+        data = self.data[firstday:lastday, ...]
+        aggdata = aggfn(data, axis=0)
+        return aggdata.ravel()
+
     def get_all_info(self):
         def printattributes(attrs, indent=''):
             print indent, 'Attributes:'
