@@ -1,5 +1,6 @@
 firstday: 92
 lastday: 122
+mode: time_series
 outfile: train.csv
 files:
     smooth_afghan_AMSRE_h23v05_WY2009.h5:

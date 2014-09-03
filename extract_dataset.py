@@ -35,15 +35,19 @@ class Extractor(object):
             for path, name in features['datasets'].iteritems():
                 explorer = Explorer(filename, path)
 
-                # Extract the data set for each day of the time series
-                # as a separate feature.
-                for day in range(firstday, lastday + 1):
-                    data = explorer.extract_slice(day + dayoffset)
-                    datadict["{0}.{1}".format(name, day)] = data
+                if self.config['mode'] == 'time_series':
+                    # Extract the data set for each day of the time series
+                    # as a separate feature.
+                    for day in range(firstday, lastday + 1):
+                        data = explorer.extract_slice(day + dayoffset)
+                        datadict["{0}.{1}".format(name, day)] = data
+                else:
+                    data = explorer.extract_regression_data(firstday + dayoffset,
+                                                            lastday + dayoffset)
+                    datadict[name] = data
 
         df = pd.DataFrame(datadict)
         df.to_csv(self.config['outfile'], index=False)
-
 
 if __name__ == '__main__':
     main()
