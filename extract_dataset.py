@@ -33,9 +33,13 @@ class Extractor(object):
             dayoffset = features['dayoffset']
             for path, name in features['datasets'].iteritems():
                 explorer = Explorer(filename, path)
-                data = explorer.extract_regression_data(firstday + dayoffset,
-                                                        lastday + dayoffset)
-                datadict[name] = data
+
+                # Extract the data set for each day of the time series
+                # as a separate feature.
+                for day in range(firstday, lastday + 1):
+                    data = explorer.extract_slice(day + dayoffset)
+                    datadict["{0}.{1}".format(name, day)] = data
+
         df = pd.DataFrame(datadict)
         df.to_csv(self.config['outfile'], index=False)
 
