@@ -38,6 +38,10 @@ class Explorer(object):
         data = self.data[firstday:lastday, ...]
         return data.ravel()
 
+    def extract_slice(self, day_of_year):
+        data = self.data[day_of_year, ...]
+        return data.ravel()
+
     def get_all_info(self):
         def printattributes(attrs, indent=''):
             print indent, 'Attributes:'
