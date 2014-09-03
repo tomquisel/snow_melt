@@ -11,3 +11,7 @@ files:
         datasets:
             Grid/MODIS_GRID_10km/sca_mean: sca_mean
             Grid/MODIS_GRID_10km/sca_stddev: sca_stddev
+    ReconSWE_h23v05_2009_10km.h5:
+        dayoffset: 0
+        datasets:
+            Grid/MODIS_GRID_10km/swe_mean: recon_swe_mean
