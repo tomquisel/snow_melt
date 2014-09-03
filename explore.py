@@ -10,7 +10,7 @@ def main():
     explorer.plot_day(args.day)
 
 def parse_args():
-    description = 'test reading in hdf5 files'
+    description = 'explore a snow melt hdf5 file'
     parser = ArgumentParser(description=description)
     parser.add_argument('infile', help='location of input hdf5 file')
     parser.add_argument('--day', help='day to plot', default=0, type=int)

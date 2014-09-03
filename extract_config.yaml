@@ -1,0 +1,8 @@
+firstday: 92
+lastday: 122
+outfile: train.csv
+files:
+    smooth_afghan_AMSRE_h23v05_WY2009.h5:
+        dayoffset: 92
+        datasets:
+            Grid/MODIS_GRID_10km/amsr_swe_smoothed: amsr_swe_smoothed
