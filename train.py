@@ -4,7 +4,7 @@ import pandas as pd
 from argparse import ArgumentParser
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-from sklearn.cross_validation import cross_val_score
+from sklearn.cross_validation import cross_val_score, KFold
 
 def main():
     args = parse_args()
@@ -29,11 +29,14 @@ class Modeler(object):
 
     def evaluate(self):
         model = self.get_model()
-        scores = cross_val_score( model, self.X, self.y)
+        scores = cross_val_score( model, self.X, self.y,
+                                 cv=KFold(len(self.y), shuffle=True),
+                                 scoring='r2')
         model.fit(self.X, self.y)
         print "coefficients:"
         print model.intercept_
         print model.coef_
+        print "score:", model.score(self.X, self.y)
         print "R^2 CV scores:"
         print scores
 
