@@ -1,25 +1,22 @@
-firstday: 92
-lastday: 122
-outfile: train.csv
+mode: per_pixel
+firstday: 72
+lastday: 105
+outfile: simple_train.csv
 files:
     smooth_afghan_AMSRE_h23v05_WY2009.h5:
         dayoffset: 92
         datasets:
             Grid/MODIS_GRID_10km/amsr_swe_smoothed:
                 name: amsr_swe_smoothed
-                aggregation: all
     h23v05_WY2009_10km.h5:
         dayoffset: 92
         datasets:
             Grid/MODIS_GRID_10km/sca_mean:
                 name: sca_mean
-                aggregation: all
             Grid/MODIS_GRID_10km/sca_stddev:
                 name: sca_stddev
-                aggregation: all
     ReconSWE_h23v05_2009_10km.h5:
         dayoffset: 0
         datasets:
             Grid/MODIS_GRID_10km/swe_mean:
                 name: recon_swe_mean
-                aggregation: mean
